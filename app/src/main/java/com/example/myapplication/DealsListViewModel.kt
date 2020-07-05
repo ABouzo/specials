@@ -7,7 +7,8 @@ import com.example.myapplication.backend.DealsRepo
 import com.example.myapplication.datamodels.DealItem
 
 //TODO("Add Repo")
-class DealsListViewModel(private val repo: DealsRepo): ViewModel() {
+class DealsListViewModel(private val repo: DealsRepo) : ViewModel() {
 
-    val dealsList : LiveData<List<DealItem>> = repo.dealsList
+    val dealsList: LiveData<List<DealItem>>
+        get() = repo.dealsList()
 }
