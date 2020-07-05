@@ -30,10 +30,6 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val indexBuffer = mapOf<Int, Int>(
-            Pair(1, 4)
-        )
-
         val dealRecyclerAdapter = DealRecyclerAdapter(view.context)
         val fancyGridLayoutManager = GridLayoutManager(view.context, 16) //TODO(Span dynamically)
         fancyGridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
@@ -43,13 +39,6 @@ class FirstFragment : Fragment() {
                     1 -> 8
                     else -> 12
                 }
-            }
-
-            override fun getSpanIndex(position: Int, spanCount: Int): Int {
-                val index = super.getSpanIndex(position, spanCount)
-                val buffer: Int? = indexBuffer[position]
-                buffer?.let { return index + buffer }
-                return index
             }
         }
 
@@ -61,6 +50,10 @@ class FirstFragment : Fragment() {
 
         dealsListViewModel.dealsList.observe(this, Observer { dealsList ->
             dealRecyclerAdapter.deals = dealsList
+        })
+
+        dealsListViewModel.canvasUnit.observe(this, Observer { canvasInfo ->
+            binding.canvasInfo.text = canvasInfo.canvasUnit.toString()
         })
     }
 
