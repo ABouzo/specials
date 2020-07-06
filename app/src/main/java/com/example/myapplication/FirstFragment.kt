@@ -45,8 +45,10 @@ class FirstFragment : Fragment() {
         })
 
         dealsListViewModel.canvasUnit.observe(this, Observer { canvasInfo ->
-            binding.canvasInfo.text = canvasInfo.canvasUnit.toString()
-            dealRecyclerAdapter.canvasInfo = canvasInfo
+            if (dealRecyclerAdapter.canvasInfo.canvasUnit != canvasInfo.canvasUnit) {
+                dealRecyclerAdapter.canvasInfo = canvasInfo
+                binding.mainCycler.removeAllViews()
+            }
         })
     }
 

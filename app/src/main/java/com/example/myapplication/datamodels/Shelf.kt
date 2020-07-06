@@ -4,13 +4,11 @@ class Shelf(private val maxWeight: Int, dealItem: DealItem) : Collection<DealIte
     private val items: MutableList<DealItem> = mutableListOf(dealItem)
 
     private var weight = dealItem.width
-    var padding = (maxWeight - weight) / 2
 
     fun putItem(item: DealItem): Boolean {
         if (weight + item.width > maxWeight) return false
         items.add(item)
         weight += item.width
-        padding = (maxWeight - weight) / 2
         return true
     }
 

@@ -6,6 +6,8 @@ class ShelfList(private val maxWidth: Int, dealItems: List<DealItem>) {
     val shelfList: List<Shelf>
         get() = _shelfList.toList()
 
+    val allDealItem: List<DealItem> = dealItems
+
     init {
         if (dealItems.isNotEmpty()) {
             _shelfList.add(Shelf(maxWidth, dealItems.first()))
