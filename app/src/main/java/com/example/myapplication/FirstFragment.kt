@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.myapplication.shelfs.DealRecyclerAdapter
 import com.example.myapplication.databinding.FragmentFirstBinding
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.java.KoinJavaComponent.getKoin
@@ -31,7 +32,11 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val dealRecyclerAdapter = DealRecyclerAdapter(view.context, getKoin().get())
+        val dealRecyclerAdapter =
+            DealRecyclerAdapter(
+                view.context,
+                getKoin().get()
+            )
         val fancyGridLayoutManager = GridLayoutManager(view.context, 1) //TODO(Span dynamically)
 
 

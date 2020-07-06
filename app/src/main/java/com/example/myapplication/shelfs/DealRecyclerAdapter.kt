@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.myapplication.shelfs
 
 import android.content.Context
 import android.content.res.Resources
@@ -8,8 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.DealItemViewHolder
+import com.example.myapplication.R
 import com.example.myapplication.datamodels.CanvasInfo
-import com.example.myapplication.datamodels.ShelfList
+import com.example.myapplication.datamodels.DealItem
 import com.squareup.picasso.Picasso
 
 class DealRecyclerAdapter internal constructor(
@@ -23,7 +25,13 @@ class DealRecyclerAdapter internal constructor(
             notifyDataSetChanged()
         }
 
-    var deals: ShelfList = ShelfList(canvasInfo.canvasUnit, emptyList())
+    private val _deals: ShelfList
+        get() = ShelfList(
+            canvasInfo.canvasUnit,
+            deals
+        )
+
+    var deals: List<DealItem> = emptyList()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -51,11 +59,14 @@ class DealRecyclerAdapter internal constructor(
             dealsVH.add(DealItemViewHolder(dealLayout))
         }
 
-        return ShelfViewHolder(layoutShelf, dealsVH.toList())
+        return ShelfViewHolder(
+            layoutShelf,
+            dealsVH.toList()
+        )
     }
 
     override fun onBindViewHolder(holder: ShelfViewHolder, position: Int) {
-        val current = deals.shelfList[position]
+        val current = _deals.shelfList[position]
         val unitsInPixels = (screenWidth / canvasInfo.canvasUnit)
         holder.dealItems.forEach { it.layout.visibility = View.GONE }
         current.forEachIndexed { index, dealItem ->
@@ -71,11 +82,12 @@ class DealRecyclerAdapter internal constructor(
                 dealName.text = dealItem.dealName
                 dealPrice.text = dealItem.price
                 dealOriginalPrice.text = dealItem.originalPrice
-                dealOriginalPrice.paintFlags = (dealOriginalPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG)
+                dealOriginalPrice.paintFlags =
+                    (dealOriginalPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG)
                 picasso.load(dealItem.dealImageUrl).into(dealImage)
             }
         }
     }
 
-    override fun getItemCount(): Int = deals.shelfList.size
+    override fun getItemCount(): Int = _deals.shelfList.size
 }

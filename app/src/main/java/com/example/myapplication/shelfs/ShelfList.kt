@@ -1,4 +1,6 @@
-package com.example.myapplication.datamodels
+package com.example.myapplication.shelfs
+
+import com.example.myapplication.datamodels.DealItem
 
 class ShelfList(private val maxWidth: Int, dealItems: List<DealItem>) {
     private val _shelfList: MutableList<Shelf> = mutableListOf()
@@ -10,7 +12,12 @@ class ShelfList(private val maxWidth: Int, dealItems: List<DealItem>) {
 
     init {
         if (dealItems.isNotEmpty()) {
-            _shelfList.add(Shelf(maxWidth, dealItems.first()))
+            _shelfList.add(
+                Shelf(
+                    maxWidth,
+                    dealItems.first()
+                )
+            )
             dealItems.minus(dealItems.first()).forEach {
                 put(it)
             }

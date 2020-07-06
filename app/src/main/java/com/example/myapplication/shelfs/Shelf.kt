@@ -1,4 +1,6 @@
-package com.example.myapplication.datamodels
+package com.example.myapplication.shelfs
+
+import com.example.myapplication.datamodels.DealItem
 
 class Shelf(private val maxWeight: Int, dealItem: DealItem) : Collection<DealItem> {
     private val items: MutableList<DealItem> = mutableListOf(dealItem)

@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.myapplication.datamodels.CanvasInfo
 import com.example.myapplication.datamodels.DealItem
-import com.example.myapplication.datamodels.ShelfList
 import com.example.myapplication.restapi.DealsService
 import com.example.myapplication.room.CanvasDao
 import com.example.myapplication.room.CanvasEntity
@@ -13,20 +12,19 @@ import com.example.myapplication.room.DealEntity
 import kotlinx.coroutines.*
 import java.util.*
 import java.util.concurrent.TimeUnit
-import kotlin.concurrent.schedule
 
 class DealsRepo(
     private val dealsService: DealsService,
     private val dealDao: DealDao,
     private val canvasDao: CanvasDao
 ) {
-    private val dealListData = MutableLiveData<ShelfList>()
+    private val dealListData = MutableLiveData<List<DealItem>>()
     private val canvasInfoData = MutableLiveData<CanvasInfo>()
-    private var simpleMemCache: ShelfList? = null
+    private var simpleMemCache: List<DealItem>? = null
     private var canvasInfoCache: CanvasInfo? = null
     private var lastRefresh: Date = Date(0)
 
-    fun dealsList(): LiveData<ShelfList> {
+    fun dealsList(): LiveData<List<DealItem>> {
         GlobalScope.launch { fetchDeals() }
         return dealListData
     }
@@ -38,10 +36,7 @@ class DealsRepo(
 
     init {
         canvasInfoData.observeForever {
-            simpleMemCache?.let { cached ->
-                simpleMemCache = ShelfList(it.canvasUnit, cached.allDealItem)
                 dealListData.postValue(simpleMemCache)
-            }
         }
     }
 
@@ -71,14 +66,14 @@ class DealsRepo(
                 )
             }
             saveToMemory(dealList, canvasInfo)
-            dealListData.postValue(ShelfList(canvasInfo.canvasUnit, dealList))
+            dealListData.postValue(dealList)
             canvasInfoData.postValue(canvasInfo)
         }
     }
 
     private fun saveToMemory(dealList: List<DealItem>, canvasInfo: CanvasInfo) {
         lastRefresh = Date()
-        simpleMemCache = ShelfList(canvasInfo.canvasUnit, dealList)
+        simpleMemCache = dealList
         canvasInfoCache = canvasInfo
     }
 
