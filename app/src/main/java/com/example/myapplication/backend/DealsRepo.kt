@@ -2,9 +2,9 @@ package com.example.myapplication.backend
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import com.example.myapplication.datamodels.CanvasInfo
 import com.example.myapplication.datamodels.DealItem
+import com.example.myapplication.datamodels.ShelfList
 import com.example.myapplication.restapi.DealsService
 import com.example.myapplication.room.CanvasDao
 import com.example.myapplication.room.CanvasEntity
@@ -21,41 +21,47 @@ class DealsRepo(
     private val canvasDao: CanvasDao
 ) {
 
-    fun dealsList(): LiveData<List<DealItem>> {
-        val liveData = MutableLiveData<List<DealItem>>()
 
-        //GlobalScope.launch { fetchDeals() }
+    private val dealListData = MutableLiveData<ShelfList>()
+    private val canvasInfo = MutableLiveData<CanvasInfo>()
 
+    init {
         dealDao.loadAll().observeForever {
             it?.let {
-                liveData.postValue(it.map { dealEntity ->
+                val list = it.map { dealEntity ->
                     DealItem(
                         dealImageUrl = dealEntity.dealUrl,
-                        dealName = dealEntity.dealName
+                        dealName = dealEntity.dealName,
+                        width = dealEntity.dealWidth,
+                        height = dealEntity.dealHeight,
+                        originalPrice = dealEntity.originalPrice,
+                        price = dealEntity.price
                     )
-                })
+                }
+                dealListData.postValue(ShelfList(canvasInfo.value?.canvasUnit ?: 1, list))
             }
         }
 
-        return liveData
-    }
-
-    fun canvasInfo(): LiveData<CanvasInfo> {
-        val liveData = MutableLiveData<CanvasInfo>()
-
-        GlobalScope.launch { fetchDeals() }
 
         canvasDao.getCanvas().observeForever { canvasEntity ->
             canvasEntity?.let {
-                liveData.postValue(
+                canvasInfo.postValue(
                     CanvasInfo(
                         canvasUnit = canvasEntity.canvasUnit
                     )
                 )
             }
         }
+    }
 
-        return liveData
+    fun dealsList(): LiveData<ShelfList> {
+        GlobalScope.launch { fetchDeals() }
+        return dealListData
+    }
+
+    fun canvasInfo(): LiveData<CanvasInfo> {
+        GlobalScope.launch { fetchDeals() }
+        return canvasInfo
     }
 
     private suspend fun fetchDeals() = withContext(Dispatchers.IO) {
@@ -66,7 +72,11 @@ class DealsRepo(
             val dealList = managerSpecials.map { managerSpecial ->
                 DealEntity(
                     dealName = managerSpecial.displayName,
-                    dealUrl = managerSpecial.imageUrl
+                    dealUrl = managerSpecial.imageUrl,
+                    dealHeight = managerSpecial.height,
+                    dealWidth = managerSpecial.width,
+                    originalPrice = managerSpecial.originalPrice,
+                    price = managerSpecial.price
                 )
             }
 

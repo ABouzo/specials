@@ -4,6 +4,7 @@ import androidx.room.Room
 import com.example.myapplication.backend.DealsRepo
 import com.example.myapplication.restapi.DealsService
 import com.example.myapplication.room.AppDB
+import com.squareup.picasso.Picasso
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Converter
@@ -27,6 +28,11 @@ val mainModule = module {
             "deals-database"
         )
             .fallbackToDestructiveMigration()
+            .build()
+    }
+
+    single {
+        Picasso.Builder(get())
             .build()
     }
 

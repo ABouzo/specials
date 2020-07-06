@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.myapplication.databinding.FragmentFirstBinding
 import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.java.KoinJavaComponent.getKoin
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -30,17 +31,8 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val dealRecyclerAdapter = DealRecyclerAdapter(view.context)
-        val fancyGridLayoutManager = GridLayoutManager(view.context, 16) //TODO(Span dynamically)
-        fancyGridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-            override fun getSpanSize(position: Int): Int {
-                return when (position) {
-                    0 -> 16
-                    1 -> 8
-                    else -> 12
-                }
-            }
-        }
+        val dealRecyclerAdapter = DealRecyclerAdapter(view.context, getKoin().get())
+        val fancyGridLayoutManager = GridLayoutManager(view.context, 1) //TODO(Span dynamically)
 
 
         binding.mainCycler.run {
@@ -54,6 +46,7 @@ class FirstFragment : Fragment() {
 
         dealsListViewModel.canvasUnit.observe(this, Observer { canvasInfo ->
             binding.canvasInfo.text = canvasInfo.canvasUnit.toString()
+            dealRecyclerAdapter.canvasInfo = canvasInfo
         })
     }
 
