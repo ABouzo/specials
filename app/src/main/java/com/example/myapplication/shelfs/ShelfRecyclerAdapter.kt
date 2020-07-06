@@ -9,17 +9,18 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.DealItemViewHolder
+import com.example.myapplication.DealsRecyclerAdapter
 import com.example.myapplication.R
 import com.example.myapplication.datamodels.CanvasInfo
 import com.example.myapplication.datamodels.DealItem
 import com.squareup.picasso.Picasso
 
-class DealRecyclerAdapter internal constructor(
-    private val context: Context,
+class ShelfRecyclerAdapter internal constructor(
+    context: Context,
     private val picasso: Picasso
-) : RecyclerView.Adapter<ShelfViewHolder>() {
+) : RecyclerView.Adapter<ShelfViewHolder>(), DealsRecyclerAdapter {
 
-    var canvasInfo: CanvasInfo = CanvasInfo(1)
+    override var canvasInfo: CanvasInfo = CanvasInfo(1)
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -31,7 +32,7 @@ class DealRecyclerAdapter internal constructor(
             deals
         )
 
-    var deals: List<DealItem> = emptyList()
+    override var deals: List<DealItem> = emptyList()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -84,10 +85,14 @@ class DealRecyclerAdapter internal constructor(
                 dealOriginalPrice.text = dealItem.originalPrice
                 dealOriginalPrice.paintFlags =
                     (dealOriginalPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG)
-                picasso.load(dealItem.dealImageUrl).into(dealImage)
+                picasso.load(dealItem.dealImageUrl)
+                    .into(dealImage)
             }
         }
     }
 
     override fun getItemCount(): Int = _deals.shelfList.size
+
+    override val adapter: RecyclerView.Adapter<*>
+        get() = this
 }

@@ -6,11 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.GridLayoutManager
-import com.example.myapplication.shelfs.DealRecyclerAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.databinding.FragmentFirstBinding
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
-import org.koin.java.KoinJavaComponent.getKoin
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -32,17 +31,13 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val dealRecyclerAdapter =
-            DealRecyclerAdapter(
-                view.context,
-                getKoin().get()
-            )
-        val fancyGridLayoutManager = GridLayoutManager(view.context, 1) //TODO(Span dynamically)
+        val dealRecyclerAdapter: DealsRecyclerAdapter by inject()
+        val dealLayoutManager: RecyclerView.LayoutManager by inject()
 
 
         binding.mainCycler.run {
-            adapter = dealRecyclerAdapter
-            layoutManager = fancyGridLayoutManager
+            adapter = dealRecyclerAdapter.adapter
+            layoutManager = dealLayoutManager
         }
 
         dealsListViewModel.dealsList.observe(this, Observer { dealsList ->
