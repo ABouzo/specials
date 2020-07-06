@@ -2,6 +2,7 @@ package com.example.myapplication
 
 import android.content.Context
 import android.content.res.Resources
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -67,7 +68,10 @@ class DealRecyclerAdapter internal constructor(
 
                 layout.visibility = View.VISIBLE
 
-                dealName.text = "u: $unitsInPixels - h: ${dealItem.height} w: ${dealItem.width }"
+                dealName.text = dealItem.dealName
+                dealPrice.text = dealItem.price
+                dealOriginalPrice.text = dealItem.originalPrice
+                dealOriginalPrice.paintFlags = (dealOriginalPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG)
                 picasso.load(dealItem.dealImageUrl).into(dealImage)
             }
         }
