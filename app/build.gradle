@@ -10,7 +10,7 @@ android {
     buildFeatures.viewBinding true
 
     defaultConfig {
-        applicationId "com.example.myapplication"
+        applicationId "com.bouzo.specials"
         minSdkVersion 16
         targetSdkVersion 30
         versionCode 1
@@ -41,8 +41,9 @@ dependencies {
 
     // region Koin Injection Framework
     implementation "org.koin:koin-android:$koin_version"
-    implementation "org.koin:koin-android-scope:$koin_version"
-    implementation "org.koin:koin-android-viewmodel:$koin_version"
+    implementation "org.koin:koin-androidx-scope:$koin_version"
+    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
+    testImplementation "org.koin:koin-test:$koin_version"
     //endregion
 
     // region Lifecycle Deps
@@ -52,8 +53,10 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
     // Saved state module for ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
-    // optional - ReactiveStreams support for LiveData
+    // ReactiveStreams support for LiveData
     implementation "androidx.lifecycle:lifecycle-reactivestreams-ktx:$lifecycle_version"
+    //  Testing
+    testImplementation "androidx.arch.core:core-testing:$arch_version"
     //endregion
 
 
@@ -80,7 +83,14 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.1.0'
     implementation 'androidx.navigation:navigation-ui-ktx:2.1.0'
     testImplementation 'junit:junit:4.12'
+    testImplementation "org.mockito:mockito-core:2.28.2"
+    testImplementation "com.squareup.okhttp3:mockwebserver:4.7.2"
+
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation "androidx.test.ext:junit-ktx:1.1.1"
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation "androidx.test:core:$coreVersion"
+    androidTestImplementation "androidx.test:core-ktx:$coreVersion"
+    androidTestImplementation "com.squareup.okhttp3:mockwebserver:4.7.2"
 
 }

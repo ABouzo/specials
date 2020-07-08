@@ -12,6 +12,46 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="CardView.Deals" parent="AppTheme">
+        <item name="cardElevation">@dimen/deal.elevation</item>
+        <item name="cardCornerRadius">@dimen/deal.corner_radius</item>
+        <item name="android:layout_margin">@dimen/deal.margin</item>
+    </style>
+
+    <style name="CardView.Deals.Layout">
+        <item name="android:layout_margin">@dimen/deal.padding</item>
+    </style>
+
+    <style name="AppTheme.Text" parent="AppTheme">
+    </style>
+
+    <style name="AppTheme.Text.Title">
+        <item name="android:textSize">24sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="AppTheme.Text.Deal">
+        <item name="android:maxLines">2</item>
+    </style>
+
+    <style name="AppTheme.Text.Deal.Name">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="AppTheme.Text.Deal.Price">
+        <item name="android:textStyle">bold</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="AppTheme.Text.Deal.Price.Reduced">
+        <item name="android:textColor">@color/colorReducedPrice</item>
+        <item name="android:layout_marginBottom">2dp</item>
+    </style>
+
+    <style name="AppTheme.Text.Deal.Price.Increased">
+        <item name="android:textColor">@color/colorIncreasedPrice</item>
+    </style>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

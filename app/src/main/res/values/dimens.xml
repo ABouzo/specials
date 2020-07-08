@@ -1,3 +1,16 @@
 <resources>
-    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="deal.margin" >8dp</dimen>
+    <dimen name="deal.padding">8dp</dimen>
+    <dimen name="deal.corner_radius">20dp</dimen>
+    <dimen name="deal.elevation">10dp</dimen>
+
+    <dimen name="deal.text.price.tiny">4sp</dimen>
+    <dimen name="deal.text.price.small">6sp</dimen>
+    <dimen name="deal.text.price.medium">12sp</dimen>
+    <dimen name="deal.text.price.large">16sp</dimen>
+
+    <dimen name="deal.text.name.tiny">3sp</dimen>
+    <dimen name="deal.text.name.small">4sp</dimen>
+    <dimen name="deal.text.name.medium">6sp</dimen>
+    <dimen name="deal.text.name.large">8sp</dimen>
 </resources>

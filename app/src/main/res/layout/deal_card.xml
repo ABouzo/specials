@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.bouzo.specials.views.ResizableDealCard xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/deal_container"
+    style="@style/CardView.Deals"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
