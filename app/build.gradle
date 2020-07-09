@@ -16,7 +16,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.bouzo.specials.MockTestRunner"
     }
 
     buildTypes {
@@ -43,7 +43,7 @@ dependencies {
     implementation "org.koin:koin-android:$koin_version"
     implementation "org.koin:koin-androidx-scope:$koin_version"
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
-    testImplementation "org.koin:koin-test:$koin_version"
+    implementation "org.koin:koin-test:$koin_version"
     //endregion
 
     // region Lifecycle Deps
@@ -61,6 +61,7 @@ dependencies {
 
 
     //Retrofit
+    implementation 'com.squareup.okhttp3:okhttp:4.7.2'
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
@@ -83,14 +84,18 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.1.0'
     implementation 'androidx.navigation:navigation-ui-ktx:2.1.0'
     testImplementation 'junit:junit:4.12'
-    testImplementation "org.mockito:mockito-core:2.28.2"
+    testImplementation "org.mockito:mockito-core:3.3.3"
     testImplementation "com.squareup.okhttp3:mockwebserver:4.7.2"
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation "androidx.test.ext:junit-ktx:1.1.1"
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.2.0'
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
     androidTestImplementation "androidx.test:core:$coreVersion"
     androidTestImplementation "androidx.test:core-ktx:$coreVersion"
     androidTestImplementation "com.squareup.okhttp3:mockwebserver:4.7.2"
+    androidTestImplementation "org.mockito:mockito-core:3.3.3"
+    androidTestImplementation "org.mockito:mockito-android:3.3.3"
 
 }
